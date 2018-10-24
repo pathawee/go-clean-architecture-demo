@@ -1,9 +1,9 @@
 package user
 
 import (
-	"demo/app/models"
+	"go-clean-architecture-demo/app/entities"
 )
 
 type UseCase interface {
-	Create(*models.User) (*models.User, error)
+	Create(*entities.User) (*entities.User, error)
 }

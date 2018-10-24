@@ -1,11 +1,11 @@
 package repository_test
 
 import (
-	"demo/app/models"
-	"demo/app/user/repository"
 	mocket "github.com/Selvatico/go-mocket"
 	"github.com/jinzhu/gorm"
 	"github.com/stretchr/testify/assert"
+	"go-clean-architecture-demo/app/entities"
+	"go-clean-architecture-demo/app/user/repository"
 	"log"
 	"testing"
 )
@@ -24,7 +24,7 @@ func SetupDBTests() *gorm.DB {
 }
 
 func TestMysqlRepository_Create(t *testing.T) {
-	userEntity := &models.User{
+	userEntity := &entities.User{
 		PhoneNumber: "1234567890",
 		Password:    "1234",
 		Name:        "Ake",

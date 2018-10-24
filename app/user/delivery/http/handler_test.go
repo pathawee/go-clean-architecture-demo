@@ -1,22 +1,22 @@
 package http_test
 
 import (
-	"demo/app/models"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
+	"go-clean-architecture-demo/app/entities"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
 
-	userHttp "demo/app/user/delivery/http"
-	"demo/app/user/mocks"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+	userHttp "go-clean-architecture-demo/app/user/delivery/http"
+	"go-clean-architecture-demo/app/user/mocks"
 )
 
 func TestUserHandler_Create(t *testing.T) {
-	mockUser := models.User{
+	mockUser := entities.User{
 		PhoneNumber: "1234567890",
 		Password:    "1234",
 		Name:        "Ake",
@@ -29,7 +29,7 @@ func TestUserHandler_Create(t *testing.T) {
 	j, err := json.Marshal(tempMockArticle)
 	assert.NoError(t, err)
 
-	mockUseCase.On("Create", mock.AnythingOfType("*models.User")).Return(&mockUser, nil)
+	mockUseCase.On("Create", mock.AnythingOfType("*entities.User")).Return(&mockUser, nil)
 
 	r := gin.Default()
 	userHttp.NewEndpointHttpHandler(r, mockUseCase)

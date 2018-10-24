@@ -1,9 +1,9 @@
 package repository
 
 import (
-	"demo/app/models"
-	"demo/app/user"
 	"github.com/jinzhu/gorm"
+	"go-clean-architecture-demo/app/entities"
+	"go-clean-architecture-demo/app/user"
 	"log"
 )
 
@@ -15,7 +15,7 @@ func InitMysqlRepository(Conn *gorm.DB) user.Repository {
 	return &mysqlRepository{Conn}
 }
 
-func (mysqlRepo *mysqlRepository) Create(userEntity *models.User) (int64, error) {
+func (mysqlRepo *mysqlRepository) Create(userEntity *entities.User) (int64, error) {
 	if err := mysqlRepo.Conn.Save(&userEntity).Error; err != nil {
 		log.Print("Saving error: ", err)
 	}
@@ -23,8 +23,8 @@ func (mysqlRepo *mysqlRepository) Create(userEntity *models.User) (int64, error)
 	return userEntity.ID, nil
 }
 
-func (mysqlRepo *mysqlRepository) GetByPhoneNumber(id int64) (models.User, error) {
-	userData := models.User{}
+func (mysqlRepo *mysqlRepository) GetByPhoneNumber(id int64) (entities.User, error) {
+	userData := entities.User{}
 
 	if err := mysqlRepo.Conn.First(&userData, id).Error; err != nil {
 		log.Print("Saving error: ", err)

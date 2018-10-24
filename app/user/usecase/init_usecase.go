@@ -1,11 +1,11 @@
 package usecase
 
 import (
-	"demo/app/user"
+	"go-clean-architecture-demo/app/user"
 )
 
 type useCase struct {
-	repo   user.Repository
+	repo user.Repository
 }
 
 func InitUseCase(repo user.Repository) user.UseCase {

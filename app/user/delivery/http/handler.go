@@ -1,9 +1,9 @@
 package http
 
 import (
-	"demo/app/models"
-	"demo/app/user"
 	"github.com/gin-gonic/gin"
+	"go-clean-architecture-demo/app/entities"
+	"go-clean-architecture-demo/app/user"
 	"net/http"
 )
 
@@ -16,12 +16,12 @@ type UserHandler struct {
 }
 
 func (userHandler *UserHandler) Create(c *gin.Context) {
-	var userEntity models.User
+	var userEntity entities.User
 	err := c.Bind(&userEntity)
 	if err != nil {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{
 			"message": err.Error(),
-		}, )
+		})
 
 		return
 	}

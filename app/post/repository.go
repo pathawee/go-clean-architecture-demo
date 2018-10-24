@@ -1,9 +1,9 @@
 package post
 
 import (
-	"demo/app/models"
+	"go-clean-architecture-demo/app/entities"
 )
 
 type Repository interface {
-	Create(*models.Post) (int64, error)
+	Create(*entities.Post) (int64, error)
 }

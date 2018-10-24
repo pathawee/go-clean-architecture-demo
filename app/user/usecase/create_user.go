@@ -1,10 +1,10 @@
 package usecase
 
 import (
-	"demo/app/models"
+	"go-clean-architecture-demo/app/entities"
 )
 
-func (useCase *useCase) Create(userEntity *models.User) (*models.User, error) {
+func (useCase *useCase) Create(userEntity *entities.User) (*entities.User, error) {
 	useCase.repo.Create(userEntity)
 	return userEntity, nil
 }

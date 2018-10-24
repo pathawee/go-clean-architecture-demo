@@ -1,9 +1,9 @@
 package post
 
 import (
-	"demo/app/models"
+	"go-clean-architecture-demo/app/entities"
 )
 
 type UseCase interface {
-	Create(*models.Post) (*models.Post, error)
+	Create(*entities.Post) (*entities.Post, error)
 }

@@ -1,19 +1,16 @@
 package main
 
 import (
-	"demo/app/database"
-	userHttp "demo/app/user/delivery/http"
-	userRepository "demo/app/user/repository"
-	userUseCase "demo/app/user/usecase"
 	"github.com/gin-gonic/gin"
-	"log"
+	"go-clean-architecture-demo/app/database"
+	userHttp "go-clean-architecture-demo/app/user/delivery/http"
+	userRepository "go-clean-architecture-demo/app/user/repository"
+	userUseCase "go-clean-architecture-demo/app/user/usecase"
 	"net/http"
-	"os"
 )
 
 func sayHello(c *gin.Context) {
-	log.Print("env POSTGRES_DB: ", os.Getenv("POSTGRES_DB"))
-	c.String(http.StatusOK, "Hello " + os.Getenv("POSTGRES_DB"))
+	c.String(http.StatusOK, "Hello")
 }
 
 func sayPongJSON(c *gin.Context) {
@@ -33,15 +30,4 @@ func main() {
 	userHttp.NewEndpointHttpHandler(r, uc)
 	database.DBMigration()
 	r.Run()
-
-	//// get port env var
-	//port := "8080"
-	//portEnv := os.Getenv("PORT")
-	//if len(portEnv) > 0 {
-	//	port = portEnv
-	//}
-	//
-	//log.Printf("Listening on port %s...", port)
-	//log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
-	//
 }
