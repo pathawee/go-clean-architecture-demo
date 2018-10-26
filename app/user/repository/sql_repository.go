@@ -27,6 +27,7 @@ func (mysqlRepo *mysqlRepository) Create(userEntity *entities.User) (int64, erro
 func (mysqlRepo *mysqlRepository) Update(condition *entities.User, userEntity *entities.User) (int64, error) {
 	if err := mysqlRepo.Conn.Model(&condition).Updates(&userEntity).Error; err != nil {
 		log.Print("Saving error: ", err)
+		return 0, err
 	}
 
 	return userEntity.ID, nil

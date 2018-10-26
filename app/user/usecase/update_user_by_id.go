@@ -5,8 +5,8 @@ import (
 )
 
 func (useCase *useCase) UpdateById(userId int64, userEntity *entities.User) (*entities.User, error) {
-	// condition := map[string]interface{}{"ID": userId}
-	condition := &entities.User{ID: userId}
-	useCase.repo.Update(condition, userEntity)
-	return userEntity, nil
+’”	condition := &entities.User{ID: userId}
+	_, err := useCase.repo.Update(condition, userEntity)
+	userEntity.ID = userId
+	return userEntity, err
 }
