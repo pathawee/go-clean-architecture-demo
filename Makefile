@@ -9,10 +9,13 @@ down:
 	docker-compose down
 
 test:
-	go test ./app/... -cover -coverprofile=coverage.out && go tool cover -html=coverage.out
+	go test ./app/... -cover -coverpkg=./app/... -coverprofile=coverage.out && go tool cover -html=coverage.out
 
 clean: down
 	@echo "=============cleaning up============="
-	rm -f api
+	rm -f app
 	docker system prune -f
 	docker volume prune -f
+
+format:
+	go fmt ./app/...
