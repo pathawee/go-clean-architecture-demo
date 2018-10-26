@@ -17,33 +17,63 @@ type UserHandler struct {
 	UserUseCase user.UseCase
 }
 
+type CreateRequest struct {
+	PhoneNumber string `json:"phoneNumber" validate:"required"`
+	Password    string `json:"password" validate:"required"`
+	Name        string `json:"name" validate:"required"`
+}
+
+type UpdateRequest struct {
+	PhoneNumber string `json:"phoneNumber" validate:"required"`
+	Name        string `json:"name" validate:"required"`
+}
+
 func (userHandler *UserHandler) Create(c *gin.Context) {
-	var userEntity entities.User
-	err := c.Bind(&userEntity)
+	var requestData CreateRequest
+	err := c.ShouldBind(&requestData)
 	if err != nil {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{
-			"message": err.Error(),
+			"status": "fail",
+			"data": map[string]interface{}{
+				"message": err.Error(),
+			},
 		})
 
 		return
 	}
 
-	ar, err := userHandler.UserUseCase.Create(&userEntity)
+	user := &entities.User{
+		PhoneNumber: requestData.PhoneNumber,
+		Password:    requestData.Password,
+		Name:        requestData.Name,
+	}
+
+	createdUser, err := userHandler.UserUseCase.Create(user)
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": err.Error(),
+			"status": "fail",
+			"data": map[string]interface{}{
+				"message": err.Error(),
+			},
 		})
+		return
 	}
 
 	c.JSON(http.StatusCreated, gin.H{
-		"data": ar,
+		"status": "success",
+		"data": map[string]interface{}{
+			"id":          createdUser.ID,
+			"name":        createdUser.Name,
+			"phoneNumber": createdUser.PhoneNumber,
+		},
 	})
+	return
 }
 
 func (userHandler *UserHandler) Update(c *gin.Context) {
-	var userEntity entities.User
-	err := c.Bind(&userEntity)
+	var requestData UpdateRequest
+	err := c.Bind(&requestData)
 	if err != nil {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{
 			"message": err.Error(),
@@ -53,19 +83,40 @@ func (userHandler *UserHandler) Update(c *gin.Context) {
 	}
 
 	id := c.Param("id")
-	userId, err := strconv.Atoi(id)
+	userID, err := strconv.Atoi(id)
+	if err != nil {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{
+			"message": err.Error(),
+		})
 
-	ar, err := userHandler.UserUseCase.UpdateById(int64(userId), &userEntity)
+		return
+	}
+
+	user := &entities.User{
+		PhoneNumber: requestData.PhoneNumber,
+		Name:        requestData.Name,
+	}
+	updatedUser, err := userHandler.UserUseCase.UpdateById(int64(userID), user)
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": err.Error(),
+			"status": "fail",
+			"data": map[string]interface{}{
+				"message": err.Error(),
+			},
 		})
+		return
 	}
 
 	c.JSON(http.StatusCreated, gin.H{
-		"data": ar,
+		"status": "success",
+		"data": map[string]interface{}{
+			"id":          updatedUser.ID,
+			"name":        updatedUser.Name,
+			"phoneNumber": updatedUser.PhoneNumber,
+		},
 	})
+	return
 }
 
 func NewEndpointHttpHandler(e *gin.Engine, us user.UseCase) {
@@ -74,5 +125,5 @@ func NewEndpointHttpHandler(e *gin.Engine, us user.UseCase) {
 	}
 
 	e.POST("/users", handler.Create)
-	e.PATCH("/users/:id", handler.Update)
+	e.PUT("/users/:id", handler.Update)
 }

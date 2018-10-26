@@ -25,13 +25,22 @@ func (mysqlRepo *mysqlRepository) Create(userEntity *entities.User) (int64, erro
 }
 
 func (mysqlRepo *mysqlRepository) Update(condition *entities.User, userEntity *entities.User) (int64, error) {
-	if err := mysqlRepo.Conn.Model(&condition).Updates(&userEntity).Error; err != nil {
+	if err := mysqlRepo.Conn.Model(&condition).Omit("password").Updates(&userEntity).Error; err != nil {
 		log.Print("Saving error: ", err)
 		return 0, err
 	}
 
 	return userEntity.ID, nil
 }
+
+// func (mysqlRepo *mysqlRepository) Delete(condition *entities.User) (int64, error) {
+// 	if err := mysqlRepo.Conn.Model(&condition).Updates(&userEntity).Error; err != nil {
+// 		log.Print("Saving error: ", err)
+// 		return 0, err
+// 	}
+
+// 	return userEntity.ID, nil
+// }
 
 func (mysqlRepo *mysqlRepository) GetByPhoneNumber(id int64) (entities.User, error) {
 	userData := entities.User{}
