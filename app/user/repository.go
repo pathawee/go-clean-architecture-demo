@@ -6,5 +6,6 @@ import (
 
 type Repository interface {
 	Create(user *entities.User) (int64, error)
+	Update(condition *entities.User, user *entities.User) (int64, error)
 	GetByPhoneNumber(id int64) (entities.User, error)
 }
