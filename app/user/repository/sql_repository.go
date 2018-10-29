@@ -16,7 +16,7 @@ func InitMysqlRepository(Conn *gorm.DB) user.Repository {
 	return &mysqlRepository{Conn}
 }
 
-func (mysqlRepo *mysqlRepository) Create(userEntity *entities.User) (int64, error) {
+func (mysqlRepo *mysqlRepository) Create(userEntity *entities.User) (uint, error) {
 	if err := mysqlRepo.Conn.Save(&userEntity).Error; err != nil {
 		log.Print("Saving error: ", err)
 		return 0, err
@@ -25,7 +25,7 @@ func (mysqlRepo *mysqlRepository) Create(userEntity *entities.User) (int64, erro
 	return userEntity.ID, nil
 }
 
-func (mysqlRepo *mysqlRepository) Update(condition *entities.User, userEntity *entities.User) (int64, error) {
+func (mysqlRepo *mysqlRepository) Update(condition *entities.User, userEntity *entities.User) (uint, error) {
 	if err := mysqlRepo.Conn.Model(&condition).Omit("password").Updates(&userEntity).Error; err != nil {
 		log.Print("Saving error: ", err)
 		return 0, err

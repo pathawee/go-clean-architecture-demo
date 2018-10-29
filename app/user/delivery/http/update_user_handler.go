@@ -38,7 +38,7 @@ func (userHandler *UserHandler) Update(c *gin.Context) {
 		PhoneNumber: requestData.PhoneNumber,
 		Name:        requestData.Name,
 	}
-	updatedUser, err := userHandler.UserUseCase.UpdateById(int64(userID), user)
+	updatedUser, err := userHandler.UserUseCase.UpdateById(uint(userID), user)
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{

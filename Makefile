@@ -2,6 +2,13 @@ dev:
 	@echo "=============starting locally============="
 	docker-compose up --build
 
+dev_app:
+	@echo "=============starting locally============="
+	docker-compose up --build demo_app
+
+db:
+	docker-compose up -d postgres_db pgadmin
+
 logs:
 	docker-compose logs -f
 
