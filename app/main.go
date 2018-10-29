@@ -1,12 +1,13 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"go-clean-architecture-demo/app/database"
 	userHttp "go-clean-architecture-demo/app/user/delivery/http"
 	userRepository "go-clean-architecture-demo/app/user/repository"
 	userUseCase "go-clean-architecture-demo/app/user/usecase"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func sayHello(c *gin.Context) {

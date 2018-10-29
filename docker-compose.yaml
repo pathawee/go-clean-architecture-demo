@@ -19,7 +19,7 @@ services:
       POSTGRES_HOST: postgres_db
       POSTGRES_PORT: 5432
       POSTGRES_USER: postgres
-      POSTGRES_PASS: mypass
+      POSTGRES_PASSWORD: mypass
       POSTGRES_DB: docker_demo
 
   postgres_db:
