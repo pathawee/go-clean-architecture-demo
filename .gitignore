@@ -2,3 +2,4 @@ vendor
 tmp
 app/app
 app/tmp
+coverage.out
