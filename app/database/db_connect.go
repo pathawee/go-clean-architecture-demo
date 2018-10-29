@@ -16,7 +16,7 @@ func ConnectDB() *gorm.DB {
 		os.Getenv("POSTGRES_HOST"),
 		os.Getenv("POSTGRES_PORT"),
 		os.Getenv("POSTGRES_USER"),
-		os.Getenv("POSTGRES_PASS"),
+		os.Getenv("POSTGRES_PASSWORD"),
 		os.Getenv("POSTGRES_DB"))
 
 	db, err := gorm.Open("postgres", connection)
@@ -34,12 +34,12 @@ func DBMigration() {
 	databaseURL := fmt.Sprintf(
 		"postgres://%s:%s@%s:%s/%s?sslmode=disable",
 		os.Getenv("POSTGRES_USER"),
-		os.Getenv("POSTGRES_PASS"),
+		os.Getenv("POSTGRES_PASSWORD"),
 		os.Getenv("POSTGRES_HOST"),
 		os.Getenv("POSTGRES_PORT"),
 		os.Getenv("POSTGRES_DB"))
 
-	m, err := migrate.New("file://app/migrations", databaseURL)
+	m, err := migrate.New("file://../app/migrations", databaseURL)
 
 	if err != nil {
 		panic(err)

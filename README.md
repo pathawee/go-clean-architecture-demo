@@ -1,7 +1,13 @@
 ``
-docker-compose build
+cd go-clean-architecture-demo
 ``
 
+Development
 ``
-docker-compose up
+$ make dev
+``
+
+Testing
+``
+$ make dev
 ``
