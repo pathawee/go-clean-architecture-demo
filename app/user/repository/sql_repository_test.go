@@ -38,5 +38,5 @@ func TestMysqlRepository_Create(t *testing.T) {
 
 	lastId, err := repo.Create(userEntity)
 	assert.NoError(t, err)
-	assert.Equal(t, int64(3), lastId)
+	assert.Equal(t, uint(3), lastId)
 }

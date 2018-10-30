@@ -12,10 +12,9 @@ import (
 func TestUseCase_Create(t *testing.T) {
 	mockUserRepo := new(mocks.Repository)
 	mockUser := entities.User{
-		ID:          99,
 		PhoneNumber: "1234567890",
 		Password:    "1234",
-		Name:        "Ake",
+		Name:        "TestUser",
 	}
 
 	mockUserRepo.On("Create", mock.AnythingOfType("*entities.User")).Return(mockUser.ID, nil)
